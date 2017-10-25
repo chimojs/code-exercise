@@ -12,7 +12,7 @@ public:
     int Count();
 protected:
     std::vector<int> m_parent_;
-	std::vector<int> m_size_;
+    std::vector<int> m_size_;
     int m_count_;
 };
 #endif // UF_UNIONFIND_H_
