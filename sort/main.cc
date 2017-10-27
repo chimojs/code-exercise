@@ -1,4 +1,5 @@
 #include "insertion-sort/insertion-sort.hpp"
+#include "quick-sort/quick-sort.hpp"
 #include <random>
 #include <vector>
 #include <iostream>
@@ -17,7 +18,7 @@ int main()
     }
     std::cout << std::endl;
 
-    InsertionSort<int> is_sorter;
+    QuickSort<int> is_sorter;
     is_sorter.Sort(sort_array);
     
     //for (auto& element : sort_array)
