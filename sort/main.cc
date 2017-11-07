@@ -16,9 +16,9 @@ int main()
         std::cout << value << " ";
     }
     std::cout << std::endl;
-	std::cout << std::endl;
-	//auto f = [](int&a, int&b)->bool{return a < b; };
-	//Heap<int, decltype(f)> is_sorter(f);
+    std::cout << std::endl;
+    //auto f = [](int&a, int&b)->bool{return a < b; };
+    //Heap<int, decltype(f)> is_sorter(f);
     Heap<int, std::less<int>> is_sorter;
     is_sorter.Build_heap(sort_array);
     is_sorter.Heap_Sort(sort_array);
