@@ -1,9 +1,8 @@
-#include "insertion-sort/insertion-sort.hpp"
-#include "quick-sort/quick-sort.hpp"
 #include <random>
 #include <vector>
 #include <iostream>
 #include <ctime>
+#include "heap-sort/heap.hpp"
 
 int main()
 {
@@ -17,10 +16,12 @@ int main()
         std::cout << value << " ";
     }
     std::cout << std::endl;
-
-    QuickSort<int> is_sorter;
-    is_sorter.Sort(sort_array);
-    
+	std::cout << std::endl;
+	//auto f = [](int&a, int&b)->bool{return a < b; };
+	//Heap<int, decltype(f)> is_sorter(f);
+    Heap<int, std::less<int>> is_sorter;
+    is_sorter.Build_heap(sort_array);
+    is_sorter.Heap_Sort(sort_array);
     //for (auto& element : sort_array)
     //{
     //  std::cout << element << " ";
