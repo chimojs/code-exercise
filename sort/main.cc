@@ -2,12 +2,12 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include "heap-sort/heap.hpp"
+#include "merge-sort/merge-sort.hpp"
 
 int main()
 {
     std::default_random_engine dre(static_cast<unsigned long>(time(0)));
-    std::uniform_int_distribution<int> di(1,50);
+    std::uniform_int_distribution<int> di(1,1000);
     std::vector<int> sort_array;
     for (int i = 0; i < 5; ++i)
     {
@@ -16,12 +16,8 @@ int main()
         std::cout << value << " ";
     }
     std::cout << std::endl;
-    std::cout << std::endl;
-    //auto f = [](int&a, int&b)->bool{return a < b; };
-    //Heap<int, decltype(f)> is_sorter(f);
-    Heap<int, std::less<int>> is_sorter;
-    is_sorter.Build_heap(sort_array);
-    is_sorter.Heap_Sort(sort_array);
+    MergeSort<int> is_sorter;
+    is_sorter.Sort(sort_array);
     //for (auto& element : sort_array)
     //{
     //  std::cout << element << " ";

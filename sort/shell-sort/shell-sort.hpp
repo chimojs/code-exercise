@@ -3,7 +3,7 @@
 #include <vector>
 
 template<typename T>
-class InsertionSort
+class ShellSort
 {
 public:
     void Sort(std::vector<T>& t_vec)

@@ -8,7 +8,7 @@ class MergeSort
 public:
     void Sort(std::vector<T>& t_vec)
     {
-        _Sort(t_vec, 0, t_vec.size) - 1);
+        _Sort(t_vec, 0, t_vec.size() - 1);
     }
     
 private:
@@ -16,16 +16,16 @@ private:
     {
         if (low == high) return;
         int mid = (low + high) / 2;
-        std::vector<T> vec_left(low, mid + 1, t_vec);
-        std::vector<T> vec_right(mid + 1, high + 1, t_vec);
-        _Sort(vec_left, 0, vec_left.size() - 1）;
-        _Sort(vec_left, 0, vec_right.size() - 1）;
+        std::vector<T> vec_left(t_vec.begin() + low, t_vec.begin() + mid + 1);
+        std::vector<T> vec_right(t_vec.begin() + mid + 1, t_vec.begin() + high + 1);
+        _Sort(vec_left, 0, vec_left.size() - 1);
+        _Sort(vec_right, 0, vec_right.size() - 1);
         Merge(t_vec, vec_left, vec_right, low);
     }
     
     void Merge(std::vector<T>& t_vec, std::vector<T>& vec_left, std::vector<T>& vec_right, int low)
     {
-        int _left = 0, _right = 0;
+        std::vector<T>::size_type _left = 0, _right = 0;
         for (; _left < vec_left.size() &&  _right < vec_right.size();)
         {
             if (vec_left[_left] <= vec_right[_right])
