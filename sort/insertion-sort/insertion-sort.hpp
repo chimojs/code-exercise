@@ -1,22 +1,23 @@
 #ifndef IS_INSERTIONSORT_H_
 #define IS_INSERTIONSORT_H_
 #include <vector>
-
+namespace CompareSort{
 template<typename T>
-class InsertionSort
-{
-public:
-    void Sort(std::vector<T>& t_vec)
+    class InsertionSort
     {
-        for (typename std::vector<T>::iterator it = t_vec.begin() + 1; it != t_vec.end(); ++it)
+    public:
+        void Sort(std::vector<T>& t_vec)
         {
-            typename std::vector<T>::iterator temp_it = it;
-            while(temp_it != t_vec.begin() && *temp_it < *std::prev(temp_it))
+            for (typename std::vector<T>::iterator it = t_vec.begin() + 1; it != t_vec.end(); ++it)
             {
-                std::swap(*temp_it, *std::prev(temp_it));
-                std::advance(temp_it, -1);
+                typename std::vector<T>::iterator temp_it = it;
+                while(temp_it != t_vec.begin() && *temp_it < *std::prev(temp_it))
+                {
+                    std::swap(*temp_it, *std::prev(temp_it));
+                    std::advance(temp_it, -1);
+                }
             }
         }
-    }
-};
+    };
+}
 #endif
