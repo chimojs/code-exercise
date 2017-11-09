@@ -2,7 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include "merge-sort/merge-sort.hpp"
+#include <algorithm>
+#include "count-sort/count-sort.hpp"
 
 int main()
 {
@@ -16,8 +17,8 @@ int main()
         std::cout << value << " ";
     }
     std::cout << std::endl;
-    MergeSort<int> is_sorter;
-    is_sorter.Sort(sort_array);
+    CountSort is_sorter;
+    is_sorter.Sort2(sort_array, *std::max_element(sort_array.begin(), sort_array.end()));
     //for (auto& element : sort_array)
     //{
     //  std::cout << element << " ";
