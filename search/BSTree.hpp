@@ -16,17 +16,39 @@ public:
         return size(_pRoot);
     }
     //unreliable
-    _Value get(const _Key& key) const
+    _Value find(const _Key& key) const
     {
-        Node* node = get(_pRoot, key);
+        Node* node = find(_pRoot, key);
         if (node)
             return node->_val;
         return _Value();
     }
 
-    void put(const _Key& key, const _Value& val)
+    void insert(const _Key& key, const _Value& val)
     {
-        _pRoot = put(_pRoot, key, val);
+		Node* parent = nullptr;
+		Node* inspos = _pRoot;
+		while (inspos)
+		{
+			parent = inspos;
+			if (_pr(key, inspos->_key))
+				inspos = inspos->_left;
+			else if (_pr(inspos->_key, key))
+				inspos = inspos->_right;
+			else
+			{
+				inspos->_val = val;
+				return;
+			}
+		}
+		Node* node = new Node(key, val);
+		node->_parent = parent;
+		if (parent == nullptr)
+			_pRoot = node;
+		else if (_pr(key, parent->_key))
+			parent->_left = node;
+		else
+			parent->_right = node;
     }
 
     //unreliable
@@ -48,16 +70,45 @@ public:
 
     void deleteMin()
     {
-        deleteMin(_pRoot);
+		Node* minimal = min(_pRoot);
+		if (minimal == nullptr) return;
+		transplant(minimal, minimal->_right);
+		minimal->_right = nullptr;
+		delete minimal;
     }
 
     void deleteKey(const _Key& key)
     {
         Node* node = get(_pRoot, key);
-        if (node == nullptr) return;
-        deleteNode(node);
+		if (node == nullptr) return;
+
+		if (node->_left == nullptr)
+		{
+			transplant(node, node->_right);
+			node->_right = nullptr;
+			delete node;
+		}
+		else if (node->_right == nullptr)
+		{
+			transplant(node, node->_left);
+			node->_left = nullptr;
+			delete node;
+		}
+		else
+		{
+			Node* successor = min(node->_right);
+			transplant(successor, successor->_right);
+
+			successor->_right = node->_right;
+			node->_right = nullptr;
+			successor->_left = node->_left;
+			node->_left = nullptr;
+
+			transplant(node, successor);
+			delete node;
+		}
     }
-private:
+protected:
     struct Node
     {
         _Key _key;
@@ -65,9 +116,11 @@ private:
         Node*   _parent;
         Node*   _left;
         Node*   _right;
+		bool	_color; //true means black,otherwise red.
         Node(const _Key& key, const _Value& val)
             : _key(key), _val(val), _parent(nullptr)
               , _left(nullptr), _right(nullptr)
+			  , _color(false)
         {}
         ~Node()
         {
@@ -82,30 +135,12 @@ private:
         return size(node->_left) + size(node->_right) + 1;
     }
 
-    Node* get(Node* node, const _Key& key) const
+    Node* find(Node* node, const _Key& key) const
     {
         if (node == nullptr) return nullptr;
-        if (_pr(key, node->_key)) return get(node->_left, key);
-        else if (_pr(node->_key, key)) return get(node->_right, key);
+        if (_pr(key, node->_key)) return find(node->_left, key);
+        else if (_pr(node->_key, key)) return find(node->_right, key);
         else return node;
-    }
-
-    Node* put(Node* node, const _Key& key, const _Value& val)
-    {
-        if (node == nullptr)
-            return new Node(key, val);
-        if (_pr(key, node->_key))
-        {
-            node->_left = put(node->_left, key, val);
-            node->_left->_parent = node;
-        }
-        else if (_pr(node->_key, key))
-        {
-            node->_right = put(node->_right, key, val);
-            node->_right->_parent = node;
-        }
-        else  node->_val = val;
-        return node;
     }
 
     Node* min(Node* node) const
@@ -124,15 +159,6 @@ private:
         return node;
     }
 
-    void deleteMin(Node* node)
-    {
-        Node* minimal = min(node);
-        if (minimal == nullptr) return;
-        transplant(minimal, minimal->_right);
-        minimal->_right = nullptr;
-        delete minimal;
-    }
-
     void transplant(Node* u, Node* v)
     {
         if (u->_parent == nullptr) _pRoot = v;
@@ -142,41 +168,10 @@ private:
         if (v != nullptr)
             v->_parent = u->_parent;
     }
-
-    void deleteNode(Node* node)
-    {
-        if (node == nullptr) return;
-
-        if (node->_left == nullptr)
-        {
-            transplant(node, node->_right);
-            node->_right = nullptr;
-            delete node;
-        }
-        else if (node->_right == nullptr)
-        {
-            transplant(node, node->_left);
-            node->_left = nullptr;
-            delete node;
-        }
-        else
-        {
-            Node* successor = min(node->_right);
-            transplant(successor, successor->_right);
-
-            successor->_right = node->_right;
-            node->_right = nullptr;
-            successor->_left = node->_left;
-            node->_left = nullptr;
-
-            transplant(node, successor);
-            delete node;
-        }
-    }
-private:
+protected:
     Node* _pRoot;
     _Pr   _pr;
     template<typename _BST>
     friend class BSTPrint;
 };
-#endif
+#endif //SEARCH_BSTREE_H_
