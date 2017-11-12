@@ -4,23 +4,23 @@
 #include<set>
 #include<vector>
 
-class  Graph
-{
-public:
-	typedef std::set<int> edge_set;
-	typedef std::vector<edge_set> adj_list;
+namespace UndirectedGraph{
+    class  Graph
+    {
+    public:
+        typedef std::set<int> edge_set;
+        typedef std::vector<edge_set> adj_list;
 
-	 Graph(int v);
-	 Graph(std::ifstream& fin);
-	 int vertex();
-	 int edge();
-	 void addedge(int v, int w);
-	 const edge_set& adj(int v);
-protected:
-	int _v;
-	int _edge;
-	adj_list _adj;
-private:
-
-};
+        Graph(int v);
+        Graph(std::ifstream& fin);
+        int vertex() const;
+        int edge() const;
+        void addedge(int v, int w);
+        const edge_set& adj(int v) const;
+    protected:
+        int _v;
+        int _edge;
+        adj_list _adj;
+    };
+}
 #endif // UDG_GRAPH_H_
