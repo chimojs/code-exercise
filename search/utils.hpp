@@ -16,6 +16,10 @@ public:
     {
         if (node == nullptr) return;
         std::cout << node->_key << '(';
+		if (node->_color)
+			std::cout << "black" << ' ';
+		else
+			std::cout << "red" << ' ';
         if (node->_left)
             std::cout << "L:" << node->_left->_key << '|';
         if (node->_right)
