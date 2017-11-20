@@ -4,7 +4,7 @@
 #include "dgraph.h"
 #include "ddfs.h"
 #include "dcycle.h"
-
+#include "topological.h"
 int main(int argc, char* argv[])
 {
     std::ifstream fin(argv[1]);
@@ -15,6 +15,8 @@ int main(int argc, char* argv[])
     for (int v : cycle)
         std::cout << v << ' ';
     std::cout << std::endl;
+    DirectedDGraph::Topological tp(dg);
+    bool bDAG = tp.isDAG();
     getchar();
     return 0;
 }
