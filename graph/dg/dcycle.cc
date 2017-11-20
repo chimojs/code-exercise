@@ -35,6 +35,7 @@ namespace DirectedDGraph {
             {
                 _edgeto[v] = s;
                 dfs(g, v);
+				continue;
             }
             if (_onstack[v])
             {
