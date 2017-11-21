@@ -40,7 +40,7 @@ namespace DirectedDGraph {
     {
         return _adj[v];
     }
-    DGraph DGraph::reverse()
+    DGraph DGraph::reverse() const
     {
         DGraph dr(_v);
         for (int v = 0; v < _v; ++v)

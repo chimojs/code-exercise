@@ -19,7 +19,7 @@ namespace DirectedDGraph{
         int edge() const;
         void addedge(int v, int w);
         const edge_set& adj(int v) const;
-        DGraph reverse();
+        DGraph reverse() const;
         DGraph& operator= (const DGraph& other);
         DGraph& operator= (DGraph&& other);
     protected:
