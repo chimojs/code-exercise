@@ -34,6 +34,15 @@ namespace WeightedGraph {
     {
         return _weight < right._weight;
     }
+    bool Edge::operator>(const Edge & right) const
+    {
+        return _weight > right._weight;
+    }
+    std::ostream & operator<<(std::ostream& out, const Edge & e)
+    {
+        out << e._v << '-' << e._w << ' ' << e._weight;
+        return out;
+    }
     WGraph::WGraph(int v): _v(v), _edge(0), _adj(v)
     {
     }

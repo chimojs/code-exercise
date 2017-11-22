@@ -3,6 +3,7 @@
 #include<fstream>
 #include<set>
 #include<vector>
+#include <iostream>
 
 namespace WeightedGraph{
     class Edge
@@ -14,10 +15,12 @@ namespace WeightedGraph{
         int other(int v) const;
         int compareto(const Edge& other) const;
         bool operator < (const Edge& right) const;
-    private:
+        bool operator > (const Edge& right) const;
+    public:
         int _v;
         int _w;
         double _weight;
+        friend std::ostream& operator << (std::ostream& out, const Edge & e);
     };
 
     class  WGraph
