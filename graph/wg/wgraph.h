@@ -1,5 +1,5 @@
-#ifndef UDG_GRAPH_H_
-#define UDG_GRAPH_H_
+#ifndef WG_WEIGHTEDGRAPH_H_
+#define WG_WEIGHTEDGRAPH_H_
 #include<fstream>
 #include<set>
 #include<vector>
@@ -38,4 +38,4 @@ namespace WeightedGraph{
         adj_list _adj;
     };
 }
-#endif // UDG_GRAPH_H_
+#endif // WG_WEIGHTEDGRAPH_H_
