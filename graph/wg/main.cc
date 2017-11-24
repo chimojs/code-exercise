@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     WeightedGraph::WGraph wg(fin);
     int v = wg.vertex();
     int edge = wg.edge();
-    WeightedGraph::KrustralMST lpmst(wg);
+    WeightedGraph::EagerPrimMST lpmst(wg);
     double value = lpmst.weight();
     std::queue<WeightedGraph::Edge> edges = lpmst.edges();
     while (!edges.empty())
