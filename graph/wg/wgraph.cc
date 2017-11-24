@@ -1,6 +1,12 @@
 #include "wgraph.h"
 
 namespace WeightedGraph {
+    Edge::Edge() 
+        : _v(std::numeric_limits<int>::quiet_NaN()),
+          _w(std::numeric_limits<int>::quiet_NaN()),
+          _weight(std::numeric_limits<double>::quiet_NaN())
+    {
+    }
     Edge::Edge(int v, int w, double weight)
     {
         _v = v;
@@ -37,6 +43,10 @@ namespace WeightedGraph {
     bool Edge::operator>(const Edge & right) const
     {
         return _weight > right._weight;
+    }
+    bool Edge::invalid()
+    {
+        return _weight != _weight;
     }
     std::ostream & operator<<(std::ostream& out, const Edge & e)
     {

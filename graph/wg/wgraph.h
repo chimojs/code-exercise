@@ -9,6 +9,7 @@ namespace WeightedGraph{
     class Edge
     {
     public:
+        Edge();
         Edge(int v, int w, double weight);
         double weight() const;
         int either() const;
@@ -16,6 +17,7 @@ namespace WeightedGraph{
         int compareto(const Edge& other) const;
         bool operator < (const Edge& right) const;
         bool operator > (const Edge& right) const;
+        bool invalid();
     public:
         int _v;
         int _w;
