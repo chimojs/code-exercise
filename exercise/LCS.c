@@ -38,9 +38,9 @@ int lcs_sequence(char * seq1, char * seq2)
     init(pT, len1, len2);
 
     int max = 0;
-    for (int i = 1; i < len1; ++i)
+    for (int i = 1; i < row_size; ++i)
     {
-        for (int j = 1; j < len2; ++j)
+        for (int j = 1; j < col_size; ++j)
         {
             if (seq1[i - 1] == seq2[j - 1])
             {
@@ -74,9 +74,9 @@ int lcs_substr(char * substr1, char * substr2)
     init(pT, len1, len2);
 
     int max = 0;
-    for (int i = 1; i < len1; ++i)
+    for (int i = 1; i < row_size; ++i)
     {
-        for (int j = 1; j < len2; ++j)
+        for (int j = 1; j < col_size; ++j)
         {
             if (substr1[i - 1] == substr2[j - 1])
             {
@@ -93,4 +93,51 @@ int lcs_substr(char * substr1, char * substr2)
     }
     free(pT);
     return max;
+}
+
+int min3(int a, int b, int c)
+{
+    if (a > b)
+        return b < c ? b : c;
+    else
+        return a < c ? a : c;
+}
+
+int Levenshtein_distance(char* str1, char* str2)
+{
+    int len1 = strlen(str1);
+    int len2 = strlen(str2);
+    if (len1 == 0 || len2 == 0)
+        return 0;
+
+    row_size = len1 + 1;
+    col_size = len2 + 1;
+    int* pT = (int*)malloc(row_size * col_size * sizeof(int));
+    for (int i = 0; i < row_size; ++i)
+        setval_at(pT, i, 0, i);
+    for (int i = 0; i < col_size; ++i)
+        setval_at(pT, 0, i, i);
+
+    for (int i = 1; i < row_size; ++i)
+    {
+        for (int j = 1; j < col_size; ++j)
+        {
+            int val1 = value_at(pT, i - 1, j - 1);
+            int val2 = value_at(pT, i - 1, j) + 1;
+            int val3 = value_at(pT, i, j - 1) + 1;
+            if (str1[i - 1] == str2[j - 1])
+            {
+                int val = min3(val1, val2, val3);
+                setval_at(pT, i, j, val);
+            }
+            else
+            {
+                int val = min3(val1 + 1, val2, val3);
+                setval_at(pT, i, j, val);
+            }
+        }
+    }
+    int min = value_at(pT, len1, len2);
+    free(pT);
+    return min;
 }
