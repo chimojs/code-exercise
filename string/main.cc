@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "lsd_sort.h"
+#include "msd_sort.h"
 
 int main(int argc, char* argv[])
 {
@@ -12,7 +13,7 @@ int main(int argc, char* argv[])
         fin >> words;
         strs.push_back(std::move(words));
     }
-    string::LSD::sort(strs, 3);
+    string::MSD::sort(strs);
     for (auto& words : strs)
         std::cout << words << std::endl;
     getchar();
