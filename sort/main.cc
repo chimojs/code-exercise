@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <algorithm>
-#include "count-sort/count-sort.hpp"
+#include "count-sort.hpp"
 
 int main()
 {
