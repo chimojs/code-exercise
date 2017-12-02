@@ -2,6 +2,7 @@
 #include <fstream>
 #include "lsd_sort.h"
 #include "msd_sort.h"
+#include "quick3string.h"
 
 int main(int argc, char* argv[])
 {
@@ -13,7 +14,7 @@ int main(int argc, char* argv[])
         fin >> words;
         strs.push_back(std::move(words));
     }
-    string::MSD::sort(strs);
+    string::Quick3String::sort(strs);
     for (auto& words : strs)
         std::cout << words << std::endl;
     getchar();
