@@ -4,12 +4,13 @@
 #include "dwgraph.h"
 #include "DijkstraSP.h"
 #include "AcylicSP.h"
+#include "BellmanFordSP.h"
 
 int main(int argc, char* argv[])
 {
 	std::ifstream fin(argv[1]);
 	DirectedWeightedGraph::DWGraph g(fin);
-	DirectedWeightedGraph::DijkstralSP sp(g, 5);
+	DirectedWeightedGraph::BellmanFordSP sp(g, 5);
 	int v = 6;
 	bool haspath = sp.hasPathTo(v);
 	std::stack<DirectedWeightedGraph::Edge> edges = sp.pathTo(v);
