@@ -1,8 +1,7 @@
 #ifndef DG_Topological_H_
 #define DG_Topological_H_
-#include "dgraph.h"
 #include <stack>
-
+#include <vector>
 namespace DirectedWeightedGraph {
     template<typename _DG>
     class Topological

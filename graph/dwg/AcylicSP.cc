@@ -1,4 +1,4 @@
-#include "../dg/topological.hpp"
+#include "topological.hpp"
 #include "AcylicSP.h"
 
 namespace DirectedWeightedGraph {
