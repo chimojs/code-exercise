@@ -37,7 +37,9 @@ namespace DirectedWeightedGraph {
     }
     bool Edge::operator<(const Edge & right) const
     {
-        return _weight < right._weight;
+        if (_v < right._v)
+            return true;
+        return _w < right._w;
     }
     bool Edge::operator>(const Edge & right) const
     {
