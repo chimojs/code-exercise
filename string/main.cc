@@ -3,6 +3,7 @@
 #include "lsd_sort.h"
 #include "msd_sort.h"
 #include "quick3string.h"
+#include "dfa.h"
 #include "kmp.h"
 
 int main(int argc, char* argv[])

@@ -10,8 +10,8 @@ namespace string {
         KMP(const std::string& pat);
         int search(const std::string& text);
     private:
-        std::vector<std::vector<int>> dfa_;
-        int M_;
+        std::vector<int> prefixfunc_;
+        std::string pat_;
     };
 }
 
