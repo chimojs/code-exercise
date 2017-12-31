@@ -5,6 +5,7 @@
 #include "quick3string.h"
 #include "dfa.h"
 #include "kmp.h"
+#include "bm.h"
 
 int main(int argc, char* argv[])
 {
@@ -16,7 +17,7 @@ int main(int argc, char* argv[])
     {
         fin >> pat >> text;
     }
-    string::KMP kmp(pat);
+    string::BM kmp(pat);
     int idx = kmp.search(text);
     std::cout << text << std::endl;
     int len = text.length();
