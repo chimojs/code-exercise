@@ -4,23 +4,20 @@
 class AhoCroasick
 {
 public:
-    AhoCroasick() : count_(0), pNode_(nullptr) {
-		pNode_ = new Node;
-	}
-	~AhoCroasick() { delete pNode_; }
+    AhoCroasick();
+    ~AhoCroasick();
 	
-    void Build(const std::string& str);
+    void insert(const std::string& str);
 	
 	void construct_fail();
 	
-    void Recognize(const std::string& text);
-
-	int GetCount() { return count_;  }
-
+    int recognize(const std::string& text);
+private:
     class Node
     {
 	public:
-		Node() : key_(false), parent_(nullptr), fail_(nullptr), id_(-1), num_(0)
+		Node() : key_(false), parent_(nullptr), fail_(nullptr), 
+            id_(-1), num_(0), ch(0x0)
 		{
 			for (int i = 0, c = sizeof(nodes) / sizeof(nodes[0]); i < c; ++i)
 				nodes[i] = nullptr;
@@ -31,13 +28,13 @@ public:
 				delete nodes[i];
 		}
         Node* nodes[26];
-        bool  key_;
-        Node* fail_;
-		Node* parent_;
-		int   id_;
-		int   num_;
+        bool  key_;//indicate trie node is a pattern
+        Node* fail_;//prefix function
+		Node* parent_;//for construct fail pointer
+		int   id_;//indicate node index
+		int   num_;//for merge output
+        char  ch;//for debugging
     };
 private:
-    int count_;
 	Node* pNode_;
 };
