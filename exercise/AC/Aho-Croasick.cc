@@ -27,12 +27,10 @@ void AhoCroasick::insert(const std::string& str)
 		assert(alpha_idx >= 0 && alpha_idx < 26);
 		if (p->nodes[alpha_idx] == nullptr || p->nodes[alpha_idx] == p)
 		{
-			p->nodes[alpha_idx] = new Node;
-			
-			p->nodes[alpha_idx]->parent_ = p;
-			p->nodes[alpha_idx]->id_ = alpha_idx;
-			
-            p->nodes[alpha_idx]->ch = str[i];
+		    p->nodes[alpha_idx] = new Node;
+		    p->nodes[alpha_idx]->parent_ = p;
+		    p->nodes[alpha_idx]->id_ = alpha_idx;
+           p->nodes[alpha_idx]->ch = str[i];
 		}
         p = p->nodes[alpha_idx];
         if (i == c - 1)
