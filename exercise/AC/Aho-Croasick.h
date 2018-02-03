@@ -1,3 +1,5 @@
+#ifndef AHOCROASICK_H_
+#define AHOCROASICK_H_
 #include<string>
 #include<queue>
 #include<cassert>
@@ -38,3 +40,4 @@ private:
 private:
 	Node* pNode_;
 };
+#endif // AHOCROASICK_H_

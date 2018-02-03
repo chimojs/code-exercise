@@ -1,11 +1,19 @@
-#include<queue>
+#include <stack>
+#include<cassert>
 #include "TSTs.h"
+
+#ifdef DEBUG
+int g_NodeIndex = 0;
+#endif // DEBUG
 
 TSTs::Node::Node() 
     : left_(nullptr), mid_(nullptr), right_(nullptr)
     , fail_(nullptr), parent_(nullptr), key_(false)
-    , num_(0), valid_num_(false)
+    , num_(0)
 {
+#ifdef DEBUG
+    idx_ = g_NodeIndex++;
+#endif // DEBUG
 }
 TSTs::Node::~Node()
 {
@@ -47,31 +55,53 @@ void TSTs::insert(const std::string& str)
 
 void TSTs::construct_fail()
 {
-    std::queue<Node*> nodes;
-    if (pNode_->mid_)
-        nodes.push(pNode_->mid_);
-    if (pNode_->left_)
-        nodes.push(pNode_->left_);
-    if (pNode_->right_)
-        nodes.push(pNode_->right_);
+    std::stack<Node*> nodes;
+    nodes.push(pNode_);
     while(!nodes.empty())
     {
-        Node* p = nodes.front();
-        nodes.pop();
-        char val = p->ch_;
-        Node* pParent_fail = p->parent_->fail_;
-        Node* pfail = nullptr;
-        while (pParent_fail && !(pfail = find(pParent_fail, val)))
-            pParent_fail = pParent_fail->fail_;
-        if (pfail == nullptr)
-            pfail = pNode_;
-        p->fail_ = pfail;
+        Node* p = nodes.top();
+        if (p == pNode_ || p->fail_);
+        else if (p->parent_ == pNode_)
+            p->fail_ = pNode_;
+        else
+        {
+            char val = p->ch_;
+            Node* pParent_fail = p->parent_->fail_;
+            if (!pParent_fail)
+            {
+                assert(p->parent_);
+                nodes.push(p->parent_);
+                continue;
+            }
 
-        if (p->mid_)
+            Node* pfail = nullptr;
+            while (!(pfail = find(pParent_fail, val)))
+            {
+                if (pParent_fail == pNode_)
+                {
+                    pfail = pNode_;
+                    break;
+                }
+                else if (pParent_fail->fail_ == nullptr)
+                {
+                    assert(pParent_fail);
+                    nodes.push(pParent_fail);
+                    break;
+                }
+                else
+                    pParent_fail = pParent_fail->fail_;
+            }
+            p->fail_ = pfail;
+        }
+        if (p != pNode_ && !p->fail_) continue;
+        nodes.pop();
+        if (p->fail_)
+            p->num_ += p->fail_->num_;
+        if (p->mid_ && !p->mid_->fail_)
             nodes.push(p->mid_);
-        if (p->left_)
+        if (p->left_ && !p->left_->fail_)
             nodes.push(p->left_);
-        if (p->right_)
+        if (p->right_ && !p->right_->fail_)
             nodes.push(p->right_);
     }
 }
@@ -94,24 +124,8 @@ int TSTs::recognize(const std::string& text)
             else
                 p = p->fail_;
         }
-        if (!pValue->valid_num_)
-            collectnum(pValue);
         count += pValue->num_;
         p = pValue;
     }
     return count;
-}
-
-void TSTs::collectnum(Node* p)
-{
-    if (p == nullptr)
-        return;
-    if (p->valid_num_)
-        return;
-    Node* pFail = p->fail_;
-    if (pFail)
-        collectnum(pFail);
-    p->valid_num_ = true;
-    if (pFail)
-        p->num_ += pFail->num_;
 }

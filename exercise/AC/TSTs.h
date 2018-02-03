@@ -1,4 +1,11 @@
+#ifndef TSTS_H_
+#define TSTS_H_
 #include<string>
+
+#ifdef DEBUG
+extern int g_NodeIndex;
+#endif // DEBUG
+
 class TSTs
 {
 public:
@@ -23,8 +30,10 @@ private:
         Node* parent_;
         bool  key_;
         int   num_;
-        bool  valid_num_;
         char  ch_;
+#ifdef DEBUG
+        int idx_;
+#endif // DEBUG
     };
 
     Node* find(Node* pNode, char val)
@@ -108,7 +117,22 @@ private:
         }
         return nullptr;
     }
-    void collectnum(Node* p);
+
+#if 0 // debugging
+    std::string getstr(TSTs::Node* p)
+    {
+        std::string val;
+        if (!p)
+            return val;
+        while (p != pNode_)
+        {
+            val.insert(val.begin(), p->ch_);
+            p = p->parent_;
+        }
+        return val;
+    }
+#endif
 private:
 	Node* pNode_;
 };
+#endif //TSTS_H_
