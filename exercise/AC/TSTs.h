@@ -23,6 +23,7 @@ private:
         Node* parent_;
         bool  key_;
         int   num_;
+        bool  valid_num_;
         char  ch_;
     };
 
@@ -35,20 +36,19 @@ private:
         Node* p = pNode->mid_;
         if (val == p->ch_)
             return p;
+        pNode = p;
         while (pNode)
         {
-            if (val < p->ch_)
+            if (val < pNode->ch_)
             {
                 pNode = pNode->left_;
-                p = pNode;
             }
-            else if (val == pNode->ch_)
-                break;
-            else
+            else if (val > pNode->ch_)
             {
                 pNode = pNode->right_;
-                p = pNode;
             }
+            else
+                break;
         }
         return pNode;
     }
@@ -66,6 +66,7 @@ private:
         }
         if (p && val == p->ch_)
             return p;
+        pParent = p;
         while (true)
         {
             if (val < p->ch_)
@@ -107,6 +108,7 @@ private:
         }
         return nullptr;
     }
+    void collectnum(Node* p);
 private:
 	Node* pNode_;
 };

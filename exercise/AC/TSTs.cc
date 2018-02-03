@@ -4,7 +4,7 @@
 TSTs::Node::Node() 
     : left_(nullptr), mid_(nullptr), right_(nullptr)
     , fail_(nullptr), parent_(nullptr), key_(false)
-    , num_(0)
+    , num_(0), valid_num_(false)
 {
 }
 TSTs::Node::~Node()
@@ -66,8 +66,6 @@ void TSTs::construct_fail()
         if (pfail == nullptr)
             pfail = pNode_;
         p->fail_ = pfail;
-        if (pfail->key_)
-            p->num_ += p->fail_->num_;
 
         if (p->mid_)
             nodes.push(p->mid_);
@@ -96,8 +94,24 @@ int TSTs::recognize(const std::string& text)
             else
                 p = p->fail_;
         }
+        if (!pValue->valid_num_)
+            collectnum(pValue);
         count += pValue->num_;
         p = pValue;
     }
     return count;
+}
+
+void TSTs::collectnum(Node* p)
+{
+    if (p == nullptr)
+        return;
+    if (p->valid_num_)
+        return;
+    Node* pFail = p->fail_;
+    if (pFail)
+        collectnum(pFail);
+    p->valid_num_ = true;
+    if (pFail)
+        p->num_ += pFail->num_;
 }
